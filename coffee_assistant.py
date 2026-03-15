@@ -67,10 +67,20 @@ def set_coffee_price(drink, price):
 
 menu_prices = {
     "espresso": 15000,
-    "latte": 16000,
-    "cappuccino": 17000,
-    "americano": 18000,
-    "mocha": 19000
+    "americano": 20000,
+    "caffè latte": 28000,
+    "cappuccino": 28000,
+    "flat white": 30000,
+    "es kopi susu gula aren": 18000,
+    "caramel macchiato": 35000,
+    "caffè mocha": 32000,
+    "hazelnut latte": 30000,
+    "spanish latte": 25000,
+    "cold brew": 33000,
+    "avocado coffee": 38000,
+    "dalgona coffee": 22000,
+    "sea salt latte": 35000,
+    "coconut coffee": 28000
 }
 
 for drink, price in menu_prices.items():

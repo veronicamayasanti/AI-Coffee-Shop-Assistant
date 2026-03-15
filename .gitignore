@@ -1,0 +1,15 @@
+# Environment variables
+.env
+
+# Python virtual environment
+venv/
+
+# IDE settings
+.idea/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Database file
+coffee_prices.db
