@@ -24,7 +24,7 @@ def show_menu():
     with get_connection() as conn:
         cursor = conn.cursor()
 
-        cursor.execute("SELECT drink, price FROM menu")
+        cursor.execute("SELECT name, category, price FROM menu")
 
         items = cursor.fetchall()
 
@@ -33,8 +33,8 @@ def show_menu():
 
     menu_text = "Here is our menu:\n"
 
-    for drink, price in items:
-        menu_text += f"{drink.title()} - ${price}\n"
+    for name, category, price in items:
+        menu_text += f"{name.title()} ({category}) - Rp{price}\n"
 
     return menu_text
 
@@ -68,4 +68,3 @@ def place_order(drink):
         conn.commit()
 
     return f"Your order for {drink} has been placed ☕"
-

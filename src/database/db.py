@@ -5,59 +5,62 @@ DB_PATH = "data/coffee.db"
 def get_connection():
     return sqlite3.connect(DB_PATH)
 
-
 def init_db():
 
     with get_connection() as conn:
         cursor = conn.cursor()
 
+        print("Initializing database...")
+
+        # Dropping the existing menu table to recreate it with new schema
+        cursor.execute("DROP TABLE IF EXISTS menu")
+
         cursor.execute("""
         CREATE TABLE IF NOT EXISTS menu (
-            drink TEXT PRIMARY KEY,
-            price REAL
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            category TEXT NOT NULL,
+            price INTEGER NOT NULL
         )
         """)
 
         cursor.execute("""
         CREATE TABLE IF NOT EXISTS orders (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            drink TEXT
+            item_name TEXT
         )
         """)
 
         conn.commit()
+        print("Database initialized.")
 
 def seed_menu():
 
-    menu_items = {
-        "espresso": 1,
-        "americano": 2,
-        "caffè latte": 3,
-        "cappuccino": 4,
-        "flat white": 5,
-        "es kopi susu gula aren": 6,
-        "caramel macchiato": 1,
-        "caffè mocha": 2,
-        "hazelnut latte": 3,
-        "spanish latte": 4,
-        "cold brew": 5,
-        "avocado coffee": 6,
-        "dalgona coffee": 1,
-        "sea salt latte": 2,
-        "coconut coffee": 3
-    }
-
+    menu_items = [
+        ('Latte', 'drink', 30000),
+        ('Cappuccino', 'drink', 32000),
+        ('Americano', 'drink', 25000),
+        ('Mocha', 'drink', 35000),
+        ('Sandwich', 'food', 40000),
+        ('Croissant', 'food', 30000),
+        ('Chocolate Cake', 'food', 35000),
+        ('Cheese Cake', 'food', 38000)
+    ]
     with get_connection() as conn:
         cursor = conn.cursor()
 
-        for drink, price in menu_items.items():
-
+        for name, category, price in menu_items:
             cursor.execute(
                 """
-                INSERT OR IGNORE INTO menu (drink, price)
-                VALUES (?, ?)
+                INSERT OR IGNORE INTO menu (name, category, price)
+                VALUES (?, ?, ?)
                 """,
-                (drink, price)
+                (name, category, price)
             )
+            print(f"Inserted menu item: {name}, Category: {category}, Price: {price}")
 
         conn.commit()
+
+def init_and_seed_db():
+    init_db()
+    seed_menu()
